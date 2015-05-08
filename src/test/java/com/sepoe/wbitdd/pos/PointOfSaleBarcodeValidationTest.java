@@ -11,12 +11,13 @@ import static org.junit.Assert.assertThat;
  * @author lumiha
  * @since 08/05/15.
  *
+ * ToTest: output general error for exceptions from the repository
  */
 public class PointOfSaleBarcodeValidationTest {
 
     private MockOutputDevice mockOutputDevice = new MockOutputDevice();
-    private MockItemRepository itemRepository = new MockItemRepository();
-    private PointOfSale pointOfSale = new PointOfSale(itemRepository, mockOutputDevice);
+    private MockItemRepository mockItemRepository = new MockItemRepository();
+    private PointOfSale pointOfSale = new PointOfSale(mockItemRepository, mockOutputDevice);
 
 
     @Test
@@ -46,6 +47,17 @@ public class PointOfSaleBarcodeValidationTest {
         pointOfSale.onBarcode(tooShortBarcode);
         assertThat(mockOutputDevice.getOutputToWrite(), is(getInvalidBarcodeMessage(tooShortBarcode)));
     }
+
+    @Test
+    public void onBarcode_forNewlineEndingBarCode_passesGeneratesCorrectToOutput() {
+        final String barcode = "123456789012";
+        final String barcodeWithNewline = barcode + "\n";
+        mockItemRepository.when(barcode, 13.13);
+        pointOfSale.onBarcode(barcodeWithNewline);
+        assertThat(mockOutputDevice.getOutputToWrite(), is("$13.13"));
+    }
+
+
 
 
     private String getInvalidBarcodeMessage(final String invalidBarCode) {
