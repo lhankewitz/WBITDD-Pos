@@ -8,7 +8,7 @@ package com.sepoe.wbitdd.pos;
  */
 public class PointOfSale {
 
-    public PointOfSale(final OutputDevice outputDevice, final ItemRepository itemRepository) {
+    public PointOfSale(final ItemRepository itemRepository, final OutputDevice outputDevice) {
         if (itemRepository == null) throw new IllegalArgumentException("Missing item repository");
         if (outputDevice == null) throw new IllegalArgumentException("Missing output device");
     }

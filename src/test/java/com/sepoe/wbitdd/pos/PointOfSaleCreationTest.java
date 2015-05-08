@@ -24,7 +24,7 @@ public class PointOfSaleCreationTest {
     @Test
     public void creatingPointOfSale_withMissingOutputDevice_throwsException() {
         try {
-            new PointOfSale(null, new ItemRepository(){});
+            new PointOfSale(new ItemRepository(){}, null);
             fail("Creation of PointOfSale without OutputDevice should throw exception");
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("Missing output device"));
@@ -34,7 +34,7 @@ public class PointOfSaleCreationTest {
     @Test
     public void createPointOfSale_withMissingItemRepository_throwsException() {
         try {
-            new PointOfSale(new OutputDevice() {}, null);
+            new PointOfSale(null, new OutputDevice() {});
             fail("Creation of PointOfSale without item repository should throw exception");
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("Missing item repository"));
@@ -43,7 +43,7 @@ public class PointOfSaleCreationTest {
 
     @Test
     public void createPointOfSale_withOutputDeviceAndItemRepository() {
-        new PointOfSale(new OutputDevice() {}, new ItemRepository() { });
+        new PointOfSale(new ItemRepository() { }, new OutputDevice() {});
     }
 
 }
