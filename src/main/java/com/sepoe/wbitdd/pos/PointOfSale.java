@@ -20,9 +20,7 @@ public class PointOfSale {
     }
 
     public void onBarcode(final String barcode) {
-        if(barcode == null || barcode.equals("xc") || barcode.isEmpty()){
-            outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
-        } else if(!barcode.matches(barcodePattern)){
+        if(isInvalidBarcode(barcode)){
             outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
         } else {
             final Double price = itemRepository.lookupItem(barcode);
@@ -30,6 +28,10 @@ public class PointOfSale {
             final String itemPrice = generateOutput(barcode, price);
             outputDevice.writeItemPrice(itemPrice);
         }
+    }
+
+    private boolean isInvalidBarcode(final String barcode) {
+        return barcode == null || barcode.isEmpty()|| !barcode.matches(barcodePattern);
     }
 
     private String generateOutput(final String barcode, final Double price) {
