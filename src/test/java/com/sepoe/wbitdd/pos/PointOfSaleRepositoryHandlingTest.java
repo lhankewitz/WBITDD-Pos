@@ -11,9 +11,11 @@ import static org.junit.Assert.assertThat;
  * @author lumiha
  * @since 08/05/15.
  * <p>
- * ToTest: output of price for different barcode - next
  * ToTest: output invalid barcode
  * ToTest: output of not found item for barcode
+ * ToRefactor: generate random valid barcodes - next
+ * ToRefactor: output should write string to output errors
+ * ToRefactor: price to price object
  * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics)
  */
 public class PointOfSaleRepositoryHandlingTest {
