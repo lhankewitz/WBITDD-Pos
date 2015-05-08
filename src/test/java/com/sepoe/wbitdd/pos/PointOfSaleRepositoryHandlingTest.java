@@ -57,6 +57,14 @@ public class PointOfSaleRepositoryHandlingTest {
         assertThat(mockOutputDevice.getOutputToWrite(), is(String.format("No item for barcode %s", barcode)));
     }
 
+    @Test
+    public void onBarCode_throwingAnException_outputsAnErrorMessage() {
+        final String barcode = generateBarCode();
+        mockItemRepository.throwExceptionInLookup();
+        pointOfSale.onBarcode(barcode);
+        assertThat(mockOutputDevice.getOutputToWrite(), is("ERROR 'Some error occurred'"));
+    }
+
 
 
     private String generateBarCode() {

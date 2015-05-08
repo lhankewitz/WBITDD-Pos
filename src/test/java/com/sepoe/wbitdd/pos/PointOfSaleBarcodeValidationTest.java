@@ -11,7 +11,6 @@ import static org.junit.Assert.assertThat;
  * @author lumiha
  * @since 08/05/15.
  *
- * ToTest: output general error for exceptions from the repository
  */
 public class PointOfSaleBarcodeValidationTest {
 

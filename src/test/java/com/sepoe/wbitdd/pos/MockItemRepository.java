@@ -12,6 +12,7 @@ public class MockItemRepository implements ItemRepository {
 
     private String barcode;
     private HashMap<String, Double> itemStore = new HashMap<>();
+    private boolean doThrowException;
 
     public String getLookupBarcode() {
         return barcode;
@@ -19,11 +20,16 @@ public class MockItemRepository implements ItemRepository {
 
     @Override
     public Double lookupItem(final String barcode) {
+        if(doThrowException) throw new RuntimeException("Some error occurred");
         this.barcode = barcode;
         return itemStore.get(barcode);
     }
 
     public void when(final String barcode, final double price) {
         itemStore.put(barcode, price);
+    }
+
+    public void throwExceptionInLookup(){
+        doThrowException = true;
     }
 }
