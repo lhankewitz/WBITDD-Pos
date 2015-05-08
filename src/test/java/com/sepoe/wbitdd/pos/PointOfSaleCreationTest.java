@@ -39,6 +39,13 @@ public class PointOfSaleCreationTest {
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("Missing item repository"));
         }
+
+        try {
+            new PointOfSale(null, null);
+            fail("Creation of PointOfSale without item repository should throw exception");
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage(), containsString("Missing item repository"));
+        }
     }
 
     @Test
