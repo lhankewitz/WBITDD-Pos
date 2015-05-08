@@ -42,9 +42,16 @@ public class PointOfSaleBarcodeValidationTest {
 
     @Test
     public void onBarcode_forTooShortBarCode_passesErrorMessageToOutput() {
-        final String tooShortBarcode = "12345678901";
+        final String tooShortBarcode = "1234";
         pointOfSale.onBarcode(tooShortBarcode);
         assertThat(mockOutputDevice.getOutputToWrite(), is(getInvalidBarcodeMessage(tooShortBarcode)));
+    }
+    
+    @Test
+    public void onBarcode_forTooLongBarCode_passesErrorMessageToOutput() {
+        final String tooLongBarcode = "1234567890123";
+        pointOfSale.onBarcode(tooLongBarcode);
+        assertThat(mockOutputDevice.getOutputToWrite(), is(getInvalidBarcodeMessage(tooLongBarcode)));
     }
 
     @Test

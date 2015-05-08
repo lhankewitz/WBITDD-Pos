@@ -8,7 +8,7 @@ package com.sepoe.wbitdd.pos;
  */
 public class PointOfSale {
 
-    private String barcodePattern = "\\d{12}";
+    private String barcodePattern = "\\d{5,12}";
     private final ItemRepository itemRepository;
     private final OutputDevice outputDevice;
 
