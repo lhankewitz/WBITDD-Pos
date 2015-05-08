@@ -8,8 +8,15 @@ package com.sepoe.wbitdd.pos;
  */
 public class MockItemRepository implements ItemRepository {
 
+    private String barcode;
 
     public String getLookupBarcode() {
-        return "123456789012";
+        return barcode;
+    }
+
+    @Override
+    public String lookupItem(final String barcode) {
+        this.barcode = barcode;
+        return barcode;
     }
 }
