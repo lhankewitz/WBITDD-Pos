@@ -24,7 +24,7 @@ public class PointOfSaleCreationTest {
     @Test
     public void creatingPointOfSale_withMissingOutputDevice_throwsException() {
         try {
-            new PointOfSale(null, new Object());
+            new PointOfSale(null, new ItemRepository(){});
             fail("Creation of PointOfSale without OutputDevice should throw exception");
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("Missing output device"));
