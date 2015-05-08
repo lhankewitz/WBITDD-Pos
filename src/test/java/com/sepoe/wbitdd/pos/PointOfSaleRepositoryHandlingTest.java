@@ -2,6 +2,8 @@ package com.sepoe.wbitdd.pos;
 
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -13,7 +15,6 @@ import static org.junit.Assert.assertThat;
  * <p>
  * ToTest: output invalid barcode
  * ToTest: output of not found item for barcode
- * ToRefactor: generate random valid barcodes - next
  * ToRefactor: output should write string to output errors
  * ToRefactor: price to price object
  * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics)
@@ -26,29 +27,41 @@ public class PointOfSaleRepositoryHandlingTest {
 
     @Test
     public void onBarcode_withValidBarcode_looksUpRepository() {
-        final String barcode1 = "123456789012";
+        final String barcode1 = generateBarCode();
         pointOfSale.onBarcode(barcode1);
         assertThat(itemRepository.getLookupBarcode(), is(barcode1));
 
-        final String barcode2 = "234567890123";
+        final String barcode2 = generateBarCode();
         pointOfSale.onBarcode(barcode2);
         assertThat(itemRepository.getLookupBarcode(), is(barcode2));
     }
 
     @Test
     public void onBarcode_withExistingItem_passesPriceToOutputDevice() {
-        final String barcode1 = "123456789012";
+        final String barcode1 = generateBarCode();
         final double price1 = 42.42;
         itemRepository.when(barcode1, price1);
 
         pointOfSale.onBarcode(barcode1);
         assertThat(outputDevice.getWrittenPrice(), is(price1));
 
-        final String barcode2 = "234567890123";
+        final String barcode2 = generateBarCode();
         final double price2 = 24.24;
         itemRepository.when(barcode2, price2);
 
         pointOfSale.onBarcode(barcode2);
         assertThat(outputDevice.getWrittenPrice(), is(price2));
     }
+
+    private String generateBarCode() {
+        char[] digitArray = new char[12];
+
+        for (int i = 0; i < 12; i++) {
+            final int digit = new Random().nextInt(10);
+            digitArray[i] = Integer.toString(digit).charAt(0);
+        }
+
+        return new String(digitArray);
+    }
+
 }
