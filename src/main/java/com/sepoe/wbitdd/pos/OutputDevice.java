@@ -8,4 +8,6 @@ package com.sepoe.wbitdd.pos;
  */
 public interface OutputDevice {
     void writePriceInformation(Double price);
+
+    void writeItemPrice(String itemPrice);
 }

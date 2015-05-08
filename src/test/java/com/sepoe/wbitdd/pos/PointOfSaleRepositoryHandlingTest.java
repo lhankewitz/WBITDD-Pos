@@ -15,31 +15,41 @@ import static org.junit.Assert.assertThat;
  * <p>
  * ToTest: output invalid barcode
  * ToTest: output of not found item for barcode
- * ToRefactor: output should write string to output errors
+ * ToRefactor: output should write string to output errors - next
  * ToRefactor: price to price object
  * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics)
  */
 public class PointOfSaleRepositoryHandlingTest {
 
-    private MockItemRepository itemRepository = new MockItemRepository();
-    private MockOutputDevice outputDevice = new MockOutputDevice();
-    private PointOfSale pointOfSale = new PointOfSale(itemRepository, outputDevice);
+    private MockItemRepository mockItemRepository = new MockItemRepository();
+    private MockOutputDevice mockOutputDevice = new MockOutputDevice();
+    private PointOfSale pointOfSale = new PointOfSale(mockItemRepository, mockOutputDevice);
 
     @Test
     public void onBarcode_withValidBarcode_looksUpRepository() {
         final String barcode1 = generateBarCode();
         pointOfSale.onBarcode(barcode1);
-        assertThat(itemRepository.getLookupBarcode(), is(barcode1));
+        assertThat(mockItemRepository.getLookupBarcode(), is(barcode1));
     }
 
     @Test
     public void onBarcode_withExistingItem_passesPriceToOutputDevice() {
         final String barcode1 = generateBarCode();
         final double price1 = 42.42;
-        itemRepository.when(barcode1, price1);
+        mockItemRepository.when(barcode1, price1);
 
         pointOfSale.onBarcode(barcode1);
-        assertThat(outputDevice.getWrittenPrice(), is(price1));
+        assertThat(mockOutputDevice.getWrittenPrice(), is(price1));
+    }
+
+    @Test
+    public void onBarcode_withExistingItem_passesPriceInformationToOutputDevice() {
+        final String barcode1 = generateBarCode();
+        final Double price1 = 42.42;
+        mockItemRepository.when(barcode1, price1);
+
+        pointOfSale.onBarcode(barcode1);
+       assertThat(mockOutputDevice.getOutputToWrite(), is("$" + price1.toString()));
     }
 
     private String generateBarCode() {

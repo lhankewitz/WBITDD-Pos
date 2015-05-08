@@ -22,5 +22,6 @@ public class PointOfSale {
     public void onBarcode(final String barcode) {
         final Double price = itemRepository.lookupItem(barcode);
         outputDevice.writePriceInformation(price);
+        outputDevice.writeItemPrice((price == null)?"":"$" + price.toString());
     }
 }
