@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
  * @author lumiha
  * @since 08/05/15.
  * <p>
- * ToTest: output of price for barcode - next
+ * ToTest: output of price for different barcode - next
  * ToTest: output invalid barcode
  * ToTest: output of not found item for barcode
  * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics)
@@ -31,5 +31,14 @@ public class PointOfSaleRepositoryHandlingTest {
         final String barcode2 = "234567890123";
         pointOfSale.onBarcode(barcode2);
         assertThat(itemRepository.getLookupBarcode(), is(barcode2));
+    }
+
+    @Test
+    public void onBarcode_withExistingItem_passesPriceToOutputDevice() {
+        final String barcode = "123456789012";
+
+        pointOfSale.onBarcode(barcode);
+        final double price = 42.42;
+        assertThat(outputDevice.getWrittenText(), is(price));
     }
 }
