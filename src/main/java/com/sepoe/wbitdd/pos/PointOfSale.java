@@ -21,19 +21,27 @@ public class PointOfSale {
     }
 
     public void onBarcode(final String barcode) {
-        if (isInvalidBarcode(barcode)) {
-            outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
-        } else {
-            final String itemPrice;
-            try {
-                final String trimmedBarcode = barcode.trim();
-                final Double price = itemRepository.lookupItem(trimmedBarcode);
+        try {
+            if (isInvalidBarcode(barcode)) {
+                outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
+            } else {
+                String output;
 
-                itemPrice = generateOutput(trimmedBarcode, price);
-                outputDevice.writeItemPrice(itemPrice);
-            } catch (Exception e) {
-                outputDevice.writeItemPrice(String.format("ERROR '%s'", e.getMessage()));
+                try {
+                    final String trimmedBarcode = barcode.trim();
+                    final Double price = itemRepository.lookupItem(trimmedBarcode);
+
+                    output = generateOutput(trimmedBarcode, price);
+                } catch (Exception e) {
+                    output = String.format("ERROR '%s'", e.getMessage());
+                }
+
+                outputDevice.writeItemPrice(output);
             }
+        } catch (Throwable throwable){
+            // in case the output itself throws an exception we cannot write the error to the output
+            // which would cause and endless loop.
+            throwable.printStackTrace();
         }
     }
 
