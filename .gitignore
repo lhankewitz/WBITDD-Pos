@@ -1,0 +1,26 @@
+
+## Directory-based project format:
+.idea/
+
+# Mongo Explorer plugin:
+# .idea/mongoSettings.xml
+
+## File-based project format:
+*.iml
+*.ipr
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+out/
+
+
+### Java template
+*.class
+
+### Gradle template
+.gradle
+build/
+
+
