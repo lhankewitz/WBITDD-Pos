@@ -13,8 +13,6 @@ import static org.junit.Assert.assertThat;
  * @author lumiha
  * @since 08/05/15.
  * <p>
- * ToTest: output invalid barcode
- * ToTest: output of not found item for barcode
  * ToRefactor: price to price object (optional)
  * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics) (optional)
  */

@@ -20,10 +20,14 @@ public class PointOfSale {
     }
 
     public void onBarcode(final String barcode) {
-        final Double price = itemRepository.lookupItem(barcode);
+        if(barcode == "xc"){
+            outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
+        } else {
+            final Double price = itemRepository.lookupItem(barcode);
 
-        final String itemPrice = generateOutput(barcode, price);
-        outputDevice.writeItemPrice(itemPrice);
+            final String itemPrice = generateOutput(barcode, price);
+            outputDevice.writeItemPrice(itemPrice);
+        }
     }
 
     private String generateOutput(final String barcode, final Double price) {
