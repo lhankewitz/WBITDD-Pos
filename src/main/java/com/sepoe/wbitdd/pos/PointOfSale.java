@@ -8,7 +8,7 @@ package com.sepoe.wbitdd.pos;
  */
 public class PointOfSale {
 
-
+    private String barcodePattern = "\\d{12}";
     private final ItemRepository itemRepository;
     private final OutputDevice outputDevice;
 
@@ -20,7 +20,9 @@ public class PointOfSale {
     }
 
     public void onBarcode(final String barcode) {
-        if(barcode == "xc" || barcode.isEmpty()){
+        if(barcode == null || barcode.equals("xc") || barcode.isEmpty()){
+            outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
+        } else if(!barcode.matches(barcodePattern)){
             outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
         } else {
             final Double price = itemRepository.lookupItem(barcode);
