@@ -12,13 +12,6 @@ import static org.junit.Assert.fail;
  * @author L.Hankewitz
  * @since 08/05/15.
  * <p>
- * Testlist:
- * ToTest: mandatory item repo and output device
- * ToTest: lookup of barcode
- * ToTest: correct barcode format
- * ToTest: output of price for barcode
- * ToTest: output invalid barcode
- * ToTest: output of not found item for barcode
  */
 public class PointOfSaleCreationTest {
     @Test
