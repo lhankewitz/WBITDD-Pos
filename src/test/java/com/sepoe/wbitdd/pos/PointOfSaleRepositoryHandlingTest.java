@@ -35,10 +35,18 @@ public class PointOfSaleRepositoryHandlingTest {
 
     @Test
     public void onBarcode_withExistingItem_passesPriceToOutputDevice() {
-        final String barcode = "123456789012";
+        final String barcode1 = "123456789012";
+        final double price1 = 42.42;
+        itemRepository.when(barcode1, price1);
 
-        pointOfSale.onBarcode(barcode);
-        final double price = 42.42;
-        assertThat(outputDevice.getWrittenText(), is(price));
+        pointOfSale.onBarcode(barcode1);
+        assertThat(outputDevice.getWrittenPrice(), is(price1));
+
+        final String barcode2 = "234567890123";
+        final double price2 = 24.24;
+        itemRepository.when(barcode2, price2);
+
+        pointOfSale.onBarcode(barcode2);
+        assertThat(outputDevice.getWrittenPrice(), is(price2));
     }
 }

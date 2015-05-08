@@ -1,5 +1,7 @@
 package com.sepoe.wbitdd.pos;
 
+import java.util.HashMap;
+
 /**
  * Class to Mock an Item repository.
  *
@@ -9,14 +11,19 @@ package com.sepoe.wbitdd.pos;
 public class MockItemRepository implements ItemRepository {
 
     private String barcode;
+    private HashMap<String, Double> itemStore = new HashMap<>();
 
     public String getLookupBarcode() {
         return barcode;
     }
 
     @Override
-    public String lookupItem(final String barcode) {
+    public Double lookupItem(final String barcode) {
         this.barcode = barcode;
-        return barcode;
+        return itemStore.get(barcode);
+    }
+
+    public void when(final String barcode, final double price) {
+        itemStore.put(barcode, price);
     }
 }

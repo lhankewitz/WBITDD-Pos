@@ -8,7 +8,14 @@ package com.sepoe.wbitdd.pos;
  */
 public class MockOutputDevice implements OutputDevice {
 
-    public Double getWrittenText() {
-        return 42.42;
+    private Double price;
+
+    public Double getWrittenPrice() {
+        return price;
+    }
+
+    @Override
+    public void writePriceInformation(final Double price) {
+        this.price = price;
     }
 }

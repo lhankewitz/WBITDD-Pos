@@ -7,4 +7,5 @@ package com.sepoe.wbitdd.pos;
  * @since 08/05/15.
  */
 public interface OutputDevice {
+    void writePriceInformation(Double price);
 }

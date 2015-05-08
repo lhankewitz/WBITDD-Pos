@@ -7,5 +7,5 @@ package com.sepoe.wbitdd.pos;
  * @since 08/05/15.
  */
 public interface ItemRepository {
-    String lookupItem(String barcode);
+    Double lookupItem(String barcode);
 }

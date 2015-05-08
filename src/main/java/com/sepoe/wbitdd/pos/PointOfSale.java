@@ -10,14 +10,17 @@ public class PointOfSale {
 
 
     private final ItemRepository itemRepository;
+    private final OutputDevice outputDevice;
 
     public PointOfSale(final ItemRepository itemRepository, final OutputDevice outputDevice) {
         if (itemRepository == null) throw new IllegalArgumentException("Missing item repository");
         if (outputDevice == null) throw new IllegalArgumentException("Missing output device");
         this.itemRepository = itemRepository;
+        this.outputDevice = outputDevice;
     }
 
     public void onBarcode(final String barcode) {
-        itemRepository.lookupItem(barcode);
+        final Double price = itemRepository.lookupItem(barcode);
+        outputDevice.writePriceInformation(price);
     }
 }

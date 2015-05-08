@@ -27,7 +27,7 @@ public class PointOfSaleCreationTest {
     @Test
     public void createPointOfSale_withMissingItemRepository_throwsException() {
         try {
-            new PointOfSale(null, new OutputDevice() {});
+            new PointOfSale(null, new MockOutputDevice());
             fail("Creation of PointOfSale without item repository should throw exception");
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage(), containsString("Missing item repository"));
@@ -43,7 +43,7 @@ public class PointOfSaleCreationTest {
 
     @Test
     public void createPointOfSale_withOutputDeviceAndItemRepository() {
-        new PointOfSale(new MockItemRepository(), new OutputDevice() {});
+        new PointOfSale(new MockItemRepository(), new MockOutputDevice());
     }
 
 }
