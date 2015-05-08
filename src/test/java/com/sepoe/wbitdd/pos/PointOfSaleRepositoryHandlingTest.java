@@ -30,10 +30,6 @@ public class PointOfSaleRepositoryHandlingTest {
         final String barcode1 = generateBarCode();
         pointOfSale.onBarcode(barcode1);
         assertThat(itemRepository.getLookupBarcode(), is(barcode1));
-
-        final String barcode2 = generateBarCode();
-        pointOfSale.onBarcode(barcode2);
-        assertThat(itemRepository.getLookupBarcode(), is(barcode2));
     }
 
     @Test
@@ -44,13 +40,6 @@ public class PointOfSaleRepositoryHandlingTest {
 
         pointOfSale.onBarcode(barcode1);
         assertThat(outputDevice.getWrittenPrice(), is(price1));
-
-        final String barcode2 = generateBarCode();
-        final double price2 = 24.24;
-        itemRepository.when(barcode2, price2);
-
-        pointOfSale.onBarcode(barcode2);
-        assertThat(outputDevice.getWrittenPrice(), is(price2));
     }
 
     private String generateBarCode() {
