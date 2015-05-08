@@ -15,9 +15,8 @@ import static org.junit.Assert.assertThat;
  * <p>
  * ToTest: output invalid barcode
  * ToTest: output of not found item for barcode
- * ToRefactor: output should write string to output errors - next
- * ToRefactor: price to price object
- * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics)
+ * ToRefactor: price to price object (optional)
+ * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics) (optional)
  */
 public class PointOfSaleRepositoryHandlingTest {
 
@@ -41,6 +40,13 @@ public class PointOfSaleRepositoryHandlingTest {
 
         pointOfSale.onBarcode(barcode1);
        assertThat(mockOutputDevice.getOutputToWrite(), is("$" + price1.toString()));
+    }
+
+    @Test
+    public void onBarcode_forUnknownBarcode_outputsErrorMessage() {
+        final String barcode = generateBarCode();
+        pointOfSale.onBarcode(barcode);
+        assertThat(mockOutputDevice.getOutputToWrite(), is(String.format("No item for barcode %s", barcode)));
     }
 
     private String generateBarCode() {

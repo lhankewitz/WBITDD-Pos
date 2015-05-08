@@ -21,6 +21,12 @@ public class PointOfSale {
 
     public void onBarcode(final String barcode) {
         final Double price = itemRepository.lookupItem(barcode);
-        outputDevice.writeItemPrice((price == null)?"":"$" + price.toString());
+
+        final String itemPrice = generateOutput(barcode, price);
+        outputDevice.writeItemPrice(itemPrice);
+    }
+
+    private String generateOutput(final String barcode, final Double price) {
+        return (price == null) ? String.format("No item for barcode %s", barcode) : "$" + price.toString();
     }
 }
