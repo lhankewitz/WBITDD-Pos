@@ -5,7 +5,13 @@
  * @since 08/05/15.
  *
  * Testlist:
- * ToTest:
+ * ToTest: mandatory repository
+ * ToTest: mandatory OutputDevice
+ * ToTest: lookup of barcode
+ * ToTest: correct barcode format
+ * ToTest: output of price for barcode
+ * ToTest: output invalid barcode
+ * ToTest: output of not found item for barcode
  */
 public class PointOfSaleTest {
 
