@@ -41,4 +41,9 @@ public class PointOfSaleCreationTest {
         }
     }
 
+    @Test
+    public void createPointOfSale_withOutputDeviceAndItemRepository() {
+        new PointOfSale(new OutputDevice() {}, new ItemRepository() { });
+    }
+
 }

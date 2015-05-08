@@ -10,6 +10,6 @@ public class PointOfSale {
 
     public PointOfSale(final OutputDevice outputDevice, final ItemRepository itemRepository) {
         if (itemRepository == null) throw new IllegalArgumentException("Missing item repository");
-       throw new IllegalArgumentException("Missing output device");
+        if (outputDevice == null) throw new IllegalArgumentException("Missing output device");
     }
 }
