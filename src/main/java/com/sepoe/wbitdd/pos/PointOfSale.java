@@ -35,6 +35,6 @@ public class PointOfSale {
     }
 
     private String generateOutput(final String barcode, final Double price) {
-        return (price == null) ? String.format("No item for barcode %s", barcode) : "$" + price.toString();
+        return (price == null) ? String.format("No item for barcode %s", barcode) : String.format("$%.2f",price);
     }
 }

@@ -13,7 +13,6 @@ import static org.junit.Assert.assertThat;
  * @author lumiha
  * @since 08/05/15.
  * <p>
- * ToTest: correct price information with more than 3 digit fraction
  * ToRefactor: price to price object (optional)
  * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics) (optional)
  */
@@ -42,11 +41,23 @@ public class PointOfSaleRepositoryHandlingTest {
     }
 
     @Test
+    public void onBarcode_withMoreThan3DigitFractionItemPrice_passes2DigitPriceInformationToOutputDevice() {
+        final String barcode1 = generateBarCode();
+        final Double price1 = 42.424;
+        mockItemRepository.when(barcode1, price1);
+
+        pointOfSale.onBarcode(barcode1);
+       assertThat(mockOutputDevice.getOutputToWrite(), is("$42.42"));
+    }
+
+    @Test
     public void onBarcode_forUnknownBarcode_outputsErrorMessage() {
         final String barcode = generateBarCode();
         pointOfSale.onBarcode(barcode);
         assertThat(mockOutputDevice.getOutputToWrite(), is(String.format("No item for barcode %s", barcode)));
     }
+
+
 
     private String generateBarCode() {
         char[] digitArray = new char[12];
