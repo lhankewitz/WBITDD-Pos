@@ -8,13 +8,10 @@ package com.sepoe.wbitdd.pos;
  */
 public class MockOutputDevice implements OutputDevice {
 
-    private Double price;
     private String itemPrice;
-
 
     @Override
     public void writeItemPrice(final String itemPrice) {
-
         this.itemPrice = itemPrice;
     }
 
