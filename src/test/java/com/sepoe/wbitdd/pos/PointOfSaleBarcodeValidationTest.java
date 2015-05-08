@@ -11,8 +11,6 @@ import static org.junit.Assert.assertThat;
  * @author lumiha
  * @since 08/05/15.
  *
- * ToTest: test invalid barcode xc
- * ToTest: test invalid barcode ""
  * ToTest: test invalid barcode null
  * ToTest: correct barcode format "\d{12}"
  */
@@ -26,6 +24,13 @@ public class PointOfSaleBarcodeValidationTest {
     @Test
     public void onBarcode_forInvalidBarCode_xc_passesErrorMessageToOutput() {
         final String invalidBarCode = "xc";
+        pointOfSale.onBarcode(invalidBarCode);
+        assertThat(mockOutputDevice.getOutputToWrite(), is(getInvalidBarcodeMessage(invalidBarCode)));
+    }
+
+    @Test
+    public void onBarcode_forEmptyBarCode_passesErrorMessageToOutput() {
+        final String invalidBarCode = "";
         pointOfSale.onBarcode(invalidBarCode);
         assertThat(mockOutputDevice.getOutputToWrite(), is(getInvalidBarcodeMessage(invalidBarCode)));
     }

@@ -20,7 +20,7 @@ public class PointOfSale {
     }
 
     public void onBarcode(final String barcode) {
-        if(barcode == "xc"){
+        if(barcode == "xc" || barcode.isEmpty()){
             outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
         } else {
             final Double price = itemRepository.lookupItem(barcode);
