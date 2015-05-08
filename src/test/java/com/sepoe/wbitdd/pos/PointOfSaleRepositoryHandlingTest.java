@@ -32,15 +32,6 @@ public class PointOfSaleRepositoryHandlingTest {
         assertThat(mockItemRepository.getLookupBarcode(), is(barcode1));
     }
 
-    @Test
-    public void onBarcode_withExistingItem_passesPriceToOutputDevice() {
-        final String barcode1 = generateBarCode();
-        final double price1 = 42.42;
-        mockItemRepository.when(barcode1, price1);
-
-        pointOfSale.onBarcode(barcode1);
-        assertThat(mockOutputDevice.getWrittenPrice(), is(price1));
-    }
 
     @Test
     public void onBarcode_withExistingItem_passesPriceInformationToOutputDevice() {
