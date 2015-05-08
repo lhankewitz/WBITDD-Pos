@@ -51,9 +51,14 @@ public class PointOfSaleBarcodeValidationTest {
     @Test
     public void onBarcode_forNewlineEndingBarCode_passesGeneratesCorrectToOutput() {
         final String barcode = "123456789012";
-        final String barcodeWithNewline = barcode + "\n";
         mockItemRepository.when(barcode, 13.13);
-        pointOfSale.onBarcode(barcodeWithNewline);
+        pointOfSale.onBarcode(barcode + "\n");
+        assertThat(mockOutputDevice.getOutputToWrite(), is("$13.13"));
+
+        pointOfSale.onBarcode(barcode + "\r");
+        assertThat(mockOutputDevice.getOutputToWrite(), is("$13.13"));
+
+        pointOfSale.onBarcode(barcode + "\t");
         assertThat(mockOutputDevice.getOutputToWrite(), is("$13.13"));
     }
 
