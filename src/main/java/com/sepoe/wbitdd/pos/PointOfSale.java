@@ -1,5 +1,7 @@
 package com.sepoe.wbitdd.pos;
 
+import java.util.Optional;
+
 /**
  * Class to provide the price of an item with barcode.
  *
@@ -40,10 +42,11 @@ public class PointOfSale {
 
     private void handleValidBarcode(final String barcode) {
         String output;
+        String output2;
 
         try {
             final String trimmedBarcode = barcode.trim();
-            final Double price = itemRepository.lookupItem(trimmedBarcode);
+            final Optional<Double> price = itemRepository.lookupPrice(trimmedBarcode);
 
             output = generateOutput(trimmedBarcode, price);
         } catch (Exception e) {
@@ -57,7 +60,7 @@ public class PointOfSale {
         return barcode == null || barcode.isEmpty() || !barcode.trim().matches(barcodePattern);
     }
 
-    private String generateOutput(final String barcode, final Double price) {
-        return (price == null) ? String.format("No item for barcode %s", barcode) : String.format("$%.2f", price);
+    private String generateOutput(final String barcode, final Optional<Double> price) {
+        return (price == Optional.<Double>empty()) ? String.format("No item for barcode %s", barcode) : String.format("$%.2f", price.get());
     }
 }

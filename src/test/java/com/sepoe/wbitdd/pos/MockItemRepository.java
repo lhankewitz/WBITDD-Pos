@@ -28,6 +28,7 @@ public class MockItemRepository implements ItemRepository {
 
     @Override
     public Optional<Double> lookupPrice(final String barcode) {
+        if (doThrowException) throw new RuntimeException("Some error occurred");
         this.barcode = barcode;
         return Optional.ofNullable(itemStore.get(barcode));
     }
