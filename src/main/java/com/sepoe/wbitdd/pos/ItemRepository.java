@@ -9,7 +9,5 @@ import java.util.Optional;
  * @since 08/05/15.
  */
 public interface ItemRepository {
-    Double lookupItem(String barcode);
-
     Optional<Double> lookupPrice(String barcode);
 }

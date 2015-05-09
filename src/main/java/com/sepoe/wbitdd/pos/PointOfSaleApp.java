@@ -52,7 +52,7 @@ public class PointOfSaleApp {
     }
 
 
-    // the real application woudl provide the price data here.
+    // the real application would provide the price data here.
     final ItemRepository itemRepository = new ItemRepository() {
         private HashMap<String, Double> prices = new HashMap<>();
 
@@ -60,11 +60,6 @@ public class PointOfSaleApp {
             prices.put("12345", 42.2);
             prices.put("123456", 142.2);
             prices.put("1234567", 2142.2);
-        }
-
-        @Override
-        public Double lookupItem(final String barcode) {
-            return prices.get(barcode);
         }
 
         @Override
