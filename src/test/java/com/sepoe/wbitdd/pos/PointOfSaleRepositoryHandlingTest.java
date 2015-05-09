@@ -8,7 +8,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Class to test the respository handling.
+ * Class to test the repository handling.
  *
  * @author lumiha
  * @since 08/05/15.
