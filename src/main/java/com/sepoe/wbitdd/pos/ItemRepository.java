@@ -1,5 +1,7 @@
 package com.sepoe.wbitdd.pos;
 
+import java.util.Optional;
+
 /**
  * Interface to represent an item repository.
  *
@@ -8,4 +10,6 @@ package com.sepoe.wbitdd.pos;
  */
 public interface ItemRepository {
     Double lookupItem(String barcode);
+
+    Optional<Double> lookupPrice(String barcode);
 }

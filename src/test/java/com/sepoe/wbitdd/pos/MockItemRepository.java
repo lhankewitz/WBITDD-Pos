@@ -1,6 +1,7 @@
 package com.sepoe.wbitdd.pos;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * Class to Mock an Item repository.
@@ -20,16 +21,22 @@ public class MockItemRepository implements ItemRepository {
 
     @Override
     public Double lookupItem(final String barcode) {
-        if(doThrowException) throw new RuntimeException("Some error occurred");
+        if (doThrowException) throw new RuntimeException("Some error occurred");
         this.barcode = barcode;
         return itemStore.get(barcode);
+    }
+
+    @Override
+    public Optional<Double> lookupPrice(final String barcode) {
+        this.barcode = barcode;
+        return Optional.ofNullable(itemStore.get(barcode));
     }
 
     public void when(final String barcode, final double price) {
         itemStore.put(barcode, price);
     }
 
-    public void throwExceptionInLookup(){
+    public void throwExceptionInLookup() {
         doThrowException = true;
     }
 }
