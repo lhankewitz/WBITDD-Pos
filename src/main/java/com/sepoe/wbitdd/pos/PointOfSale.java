@@ -2,6 +2,8 @@ package com.sepoe.wbitdd.pos;
 
 import java.util.Optional;
 
+import static java.lang.String.format;
+
 /**
  * Class to provide the price of an item with barcode.
  *
@@ -10,7 +12,7 @@ import java.util.Optional;
  */
 public class PointOfSale {
 
-    private String barcodePattern = "\\d{5,12}";
+    private static String barcodePattern = "\\d{5,12}";
     private final ItemRepository itemRepository;
     private final OutputDevice outputDevice;
 
@@ -37,12 +39,12 @@ public class PointOfSale {
     }
 
     private void handleInvalidBarcode(final String barcode) {
-        outputDevice.writeItemPrice(String.format("Invalid barcode '%s'", barcode));
+        final String errorMessage = format("Invalid barcode '%s'", barcode);
+        outputDevice.writeItemPrice(errorMessage);
     }
 
     private void handleValidBarcode(final String barcode) {
         String output;
-        String output2;
 
         try {
             final String trimmedBarcode = barcode.trim();
@@ -50,7 +52,7 @@ public class PointOfSale {
 
             output = generateOutput(trimmedBarcode, price);
         } catch (Exception e) {
-            output = String.format("ERROR '%s'", e.getMessage());
+            output = format("ERROR '%s'", e.getMessage());
         }
 
         outputDevice.writeItemPrice(output);
@@ -60,7 +62,8 @@ public class PointOfSale {
         return barcode == null || barcode.isEmpty() || !barcode.trim().matches(barcodePattern);
     }
 
-    private String generateOutput(final String barcode, final Optional<Double> price) {
-        return (price == Optional.<Double>empty()) ? String.format("No item for barcode %s", barcode) : String.format("$%.2f", price.get());
+    private String generateOutput(final String barcode, final Optional<Double> priceOptional) {
+        return priceOptional.map(price -> format("$%.2f", price))
+                            .orElse(format("No item for barcode %s", barcode));
     }
 }
