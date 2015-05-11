@@ -69,5 +69,10 @@ public class PointOfSaleApp {
     };
 
     // the real application would route this to the display here.
-    final OutputDevice outputDevice = System.out::println;
+    final OutputDevice outputDevice = new DefaultOutputDevice() {
+
+        protected void writeItemPrice(final String itemPrice) {
+            System.out.println(itemPrice);
+        }
+    };
 }

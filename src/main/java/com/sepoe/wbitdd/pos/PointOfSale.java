@@ -2,8 +2,6 @@ package com.sepoe.wbitdd.pos;
 
 import java.util.Optional;
 
-import static java.lang.String.format;
-
 /**
  * Class to provide the price of an item with barcode.
  *
@@ -44,8 +42,8 @@ public class PointOfSale {
     }
 
     private void handleInvalidBarcode(final String barcode) {
-        final String errorMessage = format("Invalid barcode '%s'", barcode);
-        outputDevice.writeItemPrice(errorMessage);
+
+        outputDevice.displayInvalidBarcode(barcode);
     }
 
     private void handleValidBarcode(final String barcode, final String normalizedBarcode) {

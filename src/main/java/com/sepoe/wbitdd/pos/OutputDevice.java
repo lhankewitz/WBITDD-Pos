@@ -8,11 +8,11 @@ package com.sepoe.wbitdd.pos;
  */
 public interface OutputDevice {
 
-    void writeItemPrice(String itemPrice);
+    void displayException(Exception e);
 
-    void displayException(final Exception e);
+    void displayNotFound(String barcode);
 
-    void displayNotFound(final String barcode);
+    void displayPrice(Double price);
 
-    void displayPrice(final Double price);
+    void displayInvalidBarcode(String barcode);
 }
