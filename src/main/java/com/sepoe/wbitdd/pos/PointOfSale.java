@@ -38,37 +38,52 @@ public class PointOfSale {
         }
     }
 
+    private boolean isInvalidBarcode(final String barcode) {
+        return barcode == null || barcode.isEmpty() || !barcode.trim().matches(barcodePattern);
+    }
+
     private void handleInvalidBarcode(final String barcode) {
         final String errorMessage = format("Invalid barcode '%s'", barcode);
         outputDevice.writeItemPrice(errorMessage);
     }
 
     private void handleValidBarcode(final String barcode) {
-        String output;
-
         try {
-            final String trimmedBarcode = barcode.trim();
-            final Optional<Double> price = itemRepository.lookupPrice(trimmedBarcode);
+            final String normalizedBarcode = getNormalizedBarCode(barcode);
 
-            output = generateOutput(trimmedBarcode, price);
-            outputDevice.writeItemPrice(output);
+            final Optional<Double> priceInformation = findPrice(normalizedBarcode);
+
+            if(priceInformation.isPresent()){
+                formatAndDisplayPrice(priceInformation.get());
+            } else {
+                generateAndDisplayNotFoundMessage(barcode);
+            }
         } catch (Exception e) {
             displayException(e);
         }
     }
 
+
+    private String getNormalizedBarCode(final String barcode) {
+        return barcode.trim();
+    }
+
+    private Optional<Double> findPrice(final String trimmedBarcode) {
+        return itemRepository.lookupPrice(trimmedBarcode);
+    }
+
+    public void formatAndDisplayPrice(final Double price) {
+        final String formattedPrice = format("$%.2f", price);
+        outputDevice.writeItemPrice(formattedPrice);
+    }
+
+    private void generateAndDisplayNotFoundMessage(final String barcode) {
+        final String notFoundMessage = format("No item for barcode %s", barcode);
+        outputDevice.writeItemPrice(notFoundMessage);
+    }
+
     private void displayException(final Exception e) {
-        final String output;
-        output = format("ERROR '%s'", e.getMessage());
-        outputDevice.writeItemPrice(output);
+        outputDevice.writeItemPrice(format("ERROR '%s'", e.getMessage()));
     }
 
-    private boolean isInvalidBarcode(final String barcode) {
-        return barcode == null || barcode.isEmpty() || !barcode.trim().matches(barcodePattern);
-    }
-
-    private String generateOutput(final String barcode, final Optional<Double> priceOptional) {
-        return priceOptional.map(price -> format("$%.2f", price))
-                            .orElse(format("No item for barcode %s", barcode));
-    }
 }
