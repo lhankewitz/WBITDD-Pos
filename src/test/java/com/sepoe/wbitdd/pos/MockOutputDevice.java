@@ -11,8 +11,8 @@ public class MockOutputDevice extends DefaultOutputDevice {
     private String itemPrice;
 
     @Override
-    public void write(final String itemPrice) {
-        this.itemPrice = itemPrice;
+    public void write(final String message) {
+        this.itemPrice = message;
     }
 
     public String getOutputToWrite() {

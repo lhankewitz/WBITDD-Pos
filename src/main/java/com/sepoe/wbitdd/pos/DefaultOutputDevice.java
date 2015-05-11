@@ -34,5 +34,5 @@ public abstract class DefaultOutputDevice implements OutputDevice {
         write(errorMessage);
     }
 
-    protected abstract void write(String itemPrice);
+    protected abstract void write(String message);
 }
