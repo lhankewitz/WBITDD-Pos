@@ -1,5 +1,7 @@
 package com.sepoe.wbitdd.pos;
 
+import static java.lang.String.format;
+
 /**
  * Class to ...
  *
@@ -17,5 +19,22 @@ public class MockOutputDevice implements OutputDevice {
 
     public String getOutputToWrite() {
         return itemPrice;
+    }
+
+    @Override
+    public void displayException(final Exception e) {
+        writeItemPrice(format("ERROR '%s'", e.getMessage()));
+    }
+
+    @Override
+    public void generateAndDisplayNotFoundMessage(final String barcode) {
+        final String notFoundMessage = format("No item for barcode %s", barcode);
+        writeItemPrice(notFoundMessage);
+    }
+
+    @Override
+    public void formatAndDisplayPrice(final Double price) {
+        final String formattedPrice = format("$%.2f", price);
+        writeItemPrice(formattedPrice);
     }
 }

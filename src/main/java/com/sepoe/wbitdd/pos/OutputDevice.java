@@ -9,4 +9,10 @@ package com.sepoe.wbitdd.pos;
 public interface OutputDevice {
 
     void writeItemPrice(String itemPrice);
+
+    void displayException(final Exception e);
+
+    void generateAndDisplayNotFoundMessage(final String barcode);
+
+    void formatAndDisplayPrice(final Double price);
 }

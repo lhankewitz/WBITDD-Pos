@@ -53,12 +53,12 @@ public class PointOfSale {
             final Optional<Double> priceInformation = findPrice(normalizedBarcode);
 
             if(priceInformation.isPresent()){
-                formatAndDisplayPrice(priceInformation.get());
+                outputDevice.formatAndDisplayPrice(priceInformation.get());
             } else {
-                generateAndDisplayNotFoundMessage(barcode);
+                outputDevice.generateAndDisplayNotFoundMessage(barcode);
             }
         } catch (Exception e) {
-            displayException(e);
+            outputDevice.displayException(e);
         }
     }
 
@@ -69,20 +69,6 @@ public class PointOfSale {
 
     private Optional<Double> findPrice(final String trimmedBarcode) {
         return itemRepository.lookupPrice(trimmedBarcode);
-    }
-
-    public void formatAndDisplayPrice(final Double price) {
-        final String formattedPrice = format("$%.2f", price);
-        outputDevice.writeItemPrice(formattedPrice);
-    }
-
-    private void generateAndDisplayNotFoundMessage(final String barcode) {
-        final String notFoundMessage = format("No item for barcode %s", barcode);
-        outputDevice.writeItemPrice(notFoundMessage);
-    }
-
-    private void displayException(final Exception e) {
-        outputDevice.writeItemPrice(format("ERROR '%s'", e.getMessage()));
     }
 
 }
