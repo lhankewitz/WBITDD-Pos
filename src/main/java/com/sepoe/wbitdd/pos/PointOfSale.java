@@ -51,10 +51,15 @@ public class PointOfSale {
             final Optional<Double> price = itemRepository.lookupPrice(trimmedBarcode);
 
             output = generateOutput(trimmedBarcode, price);
+            outputDevice.writeItemPrice(output);
         } catch (Exception e) {
-            output = format("ERROR '%s'", e.getMessage());
+            displayException(e);
         }
+    }
 
+    private void displayException(final Exception e) {
+        final String output;
+        output = format("ERROR '%s'", e.getMessage());
         outputDevice.writeItemPrice(output);
     }
 
