@@ -53,9 +53,9 @@ public class PointOfSale {
             final Optional<Double> priceInformation = findPrice(normalizedBarcode);
 
             if(priceInformation.isPresent()){
-                outputDevice.formatAndDisplayPrice(priceInformation.get());
+                outputDevice.displayPrice(priceInformation.get());
             } else {
-                outputDevice.generateAndDisplayNotFoundMessage(barcode);
+                outputDevice.displayNotFound(barcode);
             }
         } catch (Exception e) {
             outputDevice.displayException(e);

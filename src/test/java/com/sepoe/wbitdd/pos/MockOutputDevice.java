@@ -27,13 +27,13 @@ public class MockOutputDevice implements OutputDevice {
     }
 
     @Override
-    public void generateAndDisplayNotFoundMessage(final String barcode) {
+    public void displayNotFound(final String barcode) {
         final String notFoundMessage = format("No item for barcode %s", barcode);
         writeItemPrice(notFoundMessage);
     }
 
     @Override
-    public void formatAndDisplayPrice(final Double price) {
+    public void displayPrice(final Double price) {
         final String formattedPrice = format("$%.2f", price);
         writeItemPrice(formattedPrice);
     }

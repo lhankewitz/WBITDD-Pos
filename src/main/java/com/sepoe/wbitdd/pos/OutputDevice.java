@@ -12,7 +12,7 @@ public interface OutputDevice {
 
     void displayException(final Exception e);
 
-    void generateAndDisplayNotFoundMessage(final String barcode);
+    void displayNotFound(final String barcode);
 
-    void formatAndDisplayPrice(final Double price);
+    void displayPrice(final Double price);
 }
