@@ -29,7 +29,8 @@ public class PointOfSale {
             if (isInvalidBarcode(barcode)) {
                 handleInvalidBarcode(barcode);
             } else {
-                handleValidBarcode(barcode);
+                final String normalizedBarCode = getNormalizedBarCode(barcode);
+                handleValidBarcode(barcode, normalizedBarCode);
             }
         } catch (Throwable throwable){
             // in case the output itself throws an exception we cannot write the error to the output
@@ -47,10 +48,8 @@ public class PointOfSale {
         outputDevice.writeItemPrice(errorMessage);
     }
 
-    private void handleValidBarcode(final String barcode) {
+    private void handleValidBarcode(final String barcode, final String normalizedBarcode) {
         try {
-            final String normalizedBarcode = getNormalizedBarCode(barcode);
-
             final Optional<Double> priceInformation = findPrice(normalizedBarcode);
 
             if(priceInformation.isPresent()){
