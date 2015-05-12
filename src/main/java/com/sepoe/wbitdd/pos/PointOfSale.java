@@ -48,7 +48,7 @@ public class PointOfSale {
 
     private void handleValidBarcode(final String barcode, final String normalizedBarcode) {
         try {
-            final Optional<Double> priceInformation = findPrice(normalizedBarcode);
+            final Optional<Double> priceInformation = itemRepository.lookupPrice(normalizedBarcode);
 
             if(priceInformation.isPresent()){
                 outputDevice.displayPrice(priceInformation.get());
@@ -63,10 +63,6 @@ public class PointOfSale {
 
     private String getNormalizedBarCode(final String barcode) {
         return barcode.trim();
-    }
-
-    private Optional<Double> findPrice(final String trimmedBarcode) {
-        return itemRepository.lookupPrice(trimmedBarcode);
     }
 
 }
