@@ -16,9 +16,6 @@ import java.util.function.Consumer;
  */
 public class PointOfSaleApp {
 
-    public PointOfSaleApp() {
-        super();
-    }
 
     public static void main(String[] args) {
 
@@ -27,10 +24,35 @@ public class PointOfSaleApp {
 
         final PointOfSale pointOfSale = new PointOfSale(app.itemRepository, app.outputDevice);
 
-        handleInput(pointOfSale::onBarcode);
+        queryForInput(pointOfSale::onBarcode);
     }
 
-    private static void handleInput(final Consumer<String> inputHandler) {
+    // the real application would provide the price data here.
+    final ItemRepository itemRepository = new ItemRepository() {
+        private HashMap<String, Double> prices = new HashMap<>();
+
+        {
+            prices.put("12345", 42.2);
+            prices.put("123456", 142.2);
+            prices.put("1234567", 2142.2);
+        }
+
+        @Override
+        public Optional<Double> lookupPrice(final String barcode) {
+            return Optional.ofNullable(prices.get(barcode));
+        }
+    };
+
+
+    // the real application would route this to the display here.
+    final OutputDevice outputDevice = new DefaultOutputDevice() {
+
+        protected void write(final String message) {
+            System.out.println(message);
+        }
+    };
+
+    private static void queryForInput(final Consumer<String> inputHandler) {
         try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
 
             String barcode;
@@ -50,29 +72,4 @@ public class PointOfSaleApp {
             e.printStackTrace();
         }
     }
-
-
-    // the real application would provide the price data here.
-    final ItemRepository itemRepository = new ItemRepository() {
-        private HashMap<String, Double> prices = new HashMap<>();
-
-        {
-            prices.put("12345", 42.2);
-            prices.put("123456", 142.2);
-            prices.put("1234567", 2142.2);
-        }
-
-        @Override
-        public Optional<Double> lookupPrice(final String barcode) {
-            return Optional.ofNullable(prices.get(barcode));
-        }
-    };
-
-    // the real application would route this to the display here.
-    final OutputDevice outputDevice = new DefaultOutputDevice() {
-
-        protected void write(final String message) {
-            System.out.println(message);
-        }
-    };
 }
