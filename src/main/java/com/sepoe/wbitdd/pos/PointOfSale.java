@@ -72,12 +72,10 @@ public class PointOfSale {
     }
 
     public void onTotal() {
-        if (Double.valueOf(8.50).equals(total)) {
-            outputDevice.displayTotal(total);
-        } else if(Double.valueOf(24.55).equals(total)){
-            outputDevice.displayTotal(total);
-        } else {
+        if (Double.valueOf(0.00).equals(total)) {
             outputDevice.displayNoSaleInProgress();
+        } else {
+            outputDevice.displayTotal(total);
         }
     }
 }
