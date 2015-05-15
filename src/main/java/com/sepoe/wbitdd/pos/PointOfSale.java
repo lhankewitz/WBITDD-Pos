@@ -52,7 +52,7 @@ public class PointOfSale {
             final Optional<Double> priceInformation = itemRepository.lookupPrice(normalizedBarcode);
 
             if (priceInformation.isPresent()) {
-                total = priceInformation.get();
+                addPrice(priceInformation.get());
                 outputDevice.displayPrice(total);
             } else {
                 outputDevice.displayNotFound(barcode);
@@ -60,6 +60,10 @@ public class PointOfSale {
         } catch (Exception e) {
             outputDevice.displayException(e);
         }
+    }
+
+    private void addPrice(final Double price) {
+        total = price;
     }
 
 
