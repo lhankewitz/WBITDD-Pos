@@ -1,7 +1,6 @@
 package com.sepoe.wbitdd.pos;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Optional;
@@ -24,7 +23,7 @@ public class PointOfSaleApp {
 
         final PointOfSale pointOfSale = new PointOfSale(app.itemRepository, app.outputDevice);
 
-        queryForInput(pointOfSale::onBarcode);
+        queryForInput(pointOfSale::onBarcode, pointOfSale::onTotal);
     }
 
     // the real application would provide the price data here.
@@ -52,7 +51,7 @@ public class PointOfSaleApp {
         }
     };
 
-    private static void queryForInput(final Consumer<String> inputHandler) {
+    private static void queryForInput(final Consumer<String> inputHandler, Callback totalHandler) {
         try (final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
 
             String barcode;
@@ -60,7 +59,11 @@ public class PointOfSaleApp {
             barcode = bufferedReader.readLine();
 
             while (!barcode.equals("quit")) {
-                inputHandler.accept(barcode);
+                if (!barcode.equals("total")) {
+                    inputHandler.accept(barcode);
+                } else {
+                    totalHandler.call();
+                }
 
                 System.out.print("Enter 'quit' or barcode: ");
 
@@ -68,8 +71,12 @@ public class PointOfSaleApp {
             }
 
             System.out.println("Ended PointOfSaleApp");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public interface Callback{
+        void call();
     }
 }
