@@ -76,17 +76,17 @@ public class PointOfSale {
     }
 
     public void onTotal() {
-        if (isZeroTotal()) {
-            outputDevice.displayNoSaleInProgress();
-        } else {
+        if (isSaleInProgress()) {
             outputDevice.displayTotal(total);
+        } else {
+            outputDevice.displayNoSaleInProgress();
         }
 
         resetTotal();
     }
 
-    private boolean isZeroTotal() {
-        return ZERO_TOTAL == total;
+    private boolean isSaleInProgress() {
+        return ZERO_TOTAL != total;
     }
 
     private void resetTotal() {
