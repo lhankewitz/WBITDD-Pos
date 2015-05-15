@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
  * @since 08/05/15.
  *
  */
-public class PointOfSaleBarcodeValidationTest {
+public class BarcodeScanningValidationTest {
 
     private MockOutputDevice mockOutputDevice = new MockOutputDevice();
     private MockItemRepository mockItemRepository = new MockItemRepository();
