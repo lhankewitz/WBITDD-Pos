@@ -14,53 +14,52 @@ import static org.junit.Assert.assertThat;
  * ToRefactor: price to price object (optional)
  * ToRefactor: wrap Barcode into a wrapper class (inspired by object calisthenics) (optional)
  */
-public class PointOfSaleRepositoryHandlingTest {
+public class ItemLookupTest {
 
     private final BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
     private MockItemRepository mockItemRepository = new MockItemRepository();
     private MockOutputDevice mockOutputDevice = new MockOutputDevice();
-    private PointOfSale pointOfSale = new PointOfSale(mockItemRepository, mockOutputDevice);
+    private PointOfSale pos = new PointOfSale(mockItemRepository, mockOutputDevice);
 
     @Test
     public void onBarcode_withValidBarcode_looksUpRepository() {
-        final String barcode1 = barcodeGenerator.generateBarCode();
-        pointOfSale.onBarcode(barcode1);
-        assertThat(mockItemRepository.getLookupBarcode(), is(barcode1));
+        final String barcode = barcodeGenerator.generateBarcode();
+        pos.onBarcode(barcode);
+        assertThat(mockItemRepository.getLookupBarcode(), is(barcode));
     }
 
 
     @Test
     public void onBarcode_withExistingItem_passesPriceInformationToOutputDevice() {
-        final String barcode1 = barcodeGenerator.generateBarCode();
-        final Double price1 = 42.42;
-        mockItemRepository.when(barcode1, price1);
+        final String barcode = barcodeGenerator.generateBarcode();
+        final double price = 42.42;
+        mockItemRepository.when(barcode, price);
 
-        pointOfSale.onBarcode(barcode1);
-       assertThat(mockOutputDevice.getOutputToWrite(), is("$" + price1.toString()));
+        pos.onBarcode(barcode);
+       assertThat(mockOutputDevice.getOutputToWrite(), is("$" + Double.valueOf(price).toString() ));
     }
 
     @Test
     public void onBarcode_withMoreThan3DigitFractionItemPrice_passes2DigitPriceInformationToOutputDevice() {
-        final String barcode1 = barcodeGenerator.generateBarCode();
-        final Double price1 = 42.424;
-        mockItemRepository.when(barcode1, price1);
+        final String barcode = barcodeGenerator.generateBarcode();
+        mockItemRepository.when(barcode, 42.424);
 
-        pointOfSale.onBarcode(barcode1);
+        pos.onBarcode(barcode);
        assertThat(mockOutputDevice.getOutputToWrite(), is("$42.42"));
     }
 
     @Test
     public void onBarcode_forUnknownBarcode_outputsErrorMessage() {
-        final String barcode = barcodeGenerator.generateBarCode();
-        pointOfSale.onBarcode(barcode);
+        final String barcode = barcodeGenerator.generateBarcode();
+        pos.onBarcode(barcode);
         assertThat(mockOutputDevice.getOutputToWrite(), is(String.format("No item for barcode %s", barcode)));
     }
 
     @Test
     public void onBarCode_throwingAnException_outputsAnErrorMessage() {
-        final String barcode = barcodeGenerator.generateBarCode();
+        final String barcode = barcodeGenerator.generateBarcode();
         mockItemRepository.throwExceptionInLookup();
-        pointOfSale.onBarcode(barcode);
+        pos.onBarcode(barcode);
         assertThat(mockOutputDevice.getOutputToWrite(), is("ERROR 'Some error occurred'"));
     }
 

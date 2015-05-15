@@ -26,9 +26,9 @@ public class SellingMultipleItemsTest {
 
     @Test
     public void onTotal_whenSeveralItemsAreNotFound_returnsScanMessage() {
-        pos.onBarcode(barcodeGenerator.generateBarCode());
-        pos.onBarcode(barcodeGenerator.generateBarCode());
-        pos.onBarcode(barcodeGenerator.generateBarCode());
+        pos.onBarcode(barcodeGenerator.generateBarcode());
+        pos.onBarcode(barcodeGenerator.generateBarcode());
+        pos.onBarcode(barcodeGenerator.generateBarcode());
         pos.onTotal();
         assertThat(display.getOutputToWrite(), is("No sale in progress. Try scanning a product"));
     }
@@ -89,7 +89,7 @@ public class SellingMultipleItemsTest {
 
         scan(barcodes);
 
-        pos.onBarcode(barcodeGenerator.generateBarCode());
+        pos.onBarcode(barcodeGenerator.generateBarcode());
 
         pos.onTotal();
 

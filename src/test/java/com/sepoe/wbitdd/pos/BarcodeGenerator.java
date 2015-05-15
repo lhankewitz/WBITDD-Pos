@@ -6,7 +6,7 @@ public class BarcodeGenerator {
     public BarcodeGenerator() {
     }
 
-    String generateBarCode() {
+    String generateBarcode() {
         char[] digitArray = new char[12];
 
         for (int i = 0; i < 12; i++) {
@@ -19,9 +19,9 @@ public class BarcodeGenerator {
 
     String[] generateBarcodes() {
         return new String[]{
-                    generateBarCode()
-                    , generateBarCode()
-                    , generateBarCode()
+                    generateBarcode()
+                    , generateBarcode()
+                    , generateBarcode()
             };
     }
 }
