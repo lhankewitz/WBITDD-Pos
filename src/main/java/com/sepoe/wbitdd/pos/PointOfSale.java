@@ -65,4 +65,7 @@ public class PointOfSale {
         return barcode.trim();
     }
 
+    public void onTotal() {
+        outputDevice.displayNoSaleInProgress("No sale in progress. Try scanning a product");
+    }
 }

@@ -34,5 +34,10 @@ public abstract class DefaultOutputDevice implements OutputDevice {
         write(errorMessage);
     }
 
+    @Override
+    public void displayNoSaleInProgress(final String s) {
+        write(s);
+    }
+
     protected abstract void write(String message);
 }

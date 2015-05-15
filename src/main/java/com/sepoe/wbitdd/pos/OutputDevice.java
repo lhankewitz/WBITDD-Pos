@@ -15,4 +15,6 @@ public interface OutputDevice {
     void displayPrice(Double price);
 
     void displayInvalidBarcode(String barcode);
+
+    void displayNoSaleInProgress(String s);
 }
