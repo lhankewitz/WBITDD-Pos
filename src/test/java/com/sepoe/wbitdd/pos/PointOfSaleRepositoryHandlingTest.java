@@ -2,8 +2,6 @@ package com.sepoe.wbitdd.pos;
 
 import org.junit.Test;
 
-import java.util.Random;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -18,13 +16,14 @@ import static org.junit.Assert.assertThat;
  */
 public class PointOfSaleRepositoryHandlingTest {
 
+    private final BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
     private MockItemRepository mockItemRepository = new MockItemRepository();
     private MockOutputDevice mockOutputDevice = new MockOutputDevice();
     private PointOfSale pointOfSale = new PointOfSale(mockItemRepository, mockOutputDevice);
 
     @Test
     public void onBarcode_withValidBarcode_looksUpRepository() {
-        final String barcode1 = generateBarCode();
+        final String barcode1 = barcodeGenerator.generateBarCode();
         pointOfSale.onBarcode(barcode1);
         assertThat(mockItemRepository.getLookupBarcode(), is(barcode1));
     }
@@ -32,7 +31,7 @@ public class PointOfSaleRepositoryHandlingTest {
 
     @Test
     public void onBarcode_withExistingItem_passesPriceInformationToOutputDevice() {
-        final String barcode1 = generateBarCode();
+        final String barcode1 = barcodeGenerator.generateBarCode();
         final Double price1 = 42.42;
         mockItemRepository.when(barcode1, price1);
 
@@ -42,7 +41,7 @@ public class PointOfSaleRepositoryHandlingTest {
 
     @Test
     public void onBarcode_withMoreThan3DigitFractionItemPrice_passes2DigitPriceInformationToOutputDevice() {
-        final String barcode1 = generateBarCode();
+        final String barcode1 = barcodeGenerator.generateBarCode();
         final Double price1 = 42.424;
         mockItemRepository.when(barcode1, price1);
 
@@ -52,30 +51,18 @@ public class PointOfSaleRepositoryHandlingTest {
 
     @Test
     public void onBarcode_forUnknownBarcode_outputsErrorMessage() {
-        final String barcode = generateBarCode();
+        final String barcode = barcodeGenerator.generateBarCode();
         pointOfSale.onBarcode(barcode);
         assertThat(mockOutputDevice.getOutputToWrite(), is(String.format("No item for barcode %s", barcode)));
     }
 
     @Test
     public void onBarCode_throwingAnException_outputsAnErrorMessage() {
-        final String barcode = generateBarCode();
+        final String barcode = barcodeGenerator.generateBarCode();
         mockItemRepository.throwExceptionInLookup();
         pointOfSale.onBarcode(barcode);
         assertThat(mockOutputDevice.getOutputToWrite(), is("ERROR 'Some error occurred'"));
     }
 
-
-
-    private String generateBarCode() {
-        char[] digitArray = new char[12];
-
-        for (int i = 0; i < 12; i++) {
-            final int digit = new Random().nextInt(10);
-            digitArray[i] = Integer.toString(digit).charAt(0);
-        }
-
-        return new String(digitArray);
-    }
 
 }
