@@ -12,8 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @since 15/05/15.
  */
 public class SellingMultipleItemsTest {
-    private static final int BARCODE_IDX = 0;
-    private static final int PRICE_IDX = 1;
     private MockOutputDevice display = new MockOutputDevice();
     private final MockItemRepository mockItemRepository = new MockItemRepository();
     private PointOfSale pos = new PointOfSale(mockItemRepository, display);
@@ -21,7 +19,16 @@ public class SellingMultipleItemsTest {
     private BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
 
     @Test
-    public void onTotal_forNoItmems_returnsMessage() {
+    public void onTotal_forNoItems_returnsMessage() {
+        pos.onTotal();
+        assertThat(display.getOutputToWrite(), is("No sale in progress. Try scanning a product"));
+    }
+
+    @Test
+    public void onTotal_whenSeveralItemsAreNotFound_returnsScanMessage() {
+        pos.onBarcode(barcodeGenerator.generateBarCode());
+        pos.onBarcode(barcodeGenerator.generateBarCode());
+        pos.onBarcode(barcodeGenerator.generateBarCode());
         pos.onTotal();
         assertThat(display.getOutputToWrite(), is("No sale in progress. Try scanning a product"));
     }
