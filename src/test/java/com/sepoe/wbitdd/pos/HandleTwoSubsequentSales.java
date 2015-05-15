@@ -3,6 +3,9 @@ package com.sepoe.wbitdd.pos;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 /**
  * Class to test to subsequent tests.
  * @author lumiha
@@ -10,9 +13,18 @@ import org.junit.Test;
  */
 public class HandleTwoSubsequentSales {
 
+    private MockOutputDevice display = new MockOutputDevice();
+
     // ToTest: subsequent sales
     @Test
-    @Ignore("Handling reset of total after sale")
+    @Ignore("extract test data generator first")
     public void onTotal_forTwoSubsequentSales_calculatesTwoTotals() {
+
+
+        assertThat(display.getOutputToWrite(), is("Total $12.50"));
+
+
+        assertThat(display.getOutputToWrite(), is("Total $7.50"));
+
     }
 }
