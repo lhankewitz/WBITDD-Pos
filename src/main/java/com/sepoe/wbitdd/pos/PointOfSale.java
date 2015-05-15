@@ -3,7 +3,7 @@ package com.sepoe.wbitdd.pos;
 import java.util.Optional;
 
 /**
- * Class to provide the price of an item with barcode.
+ * Class to provide the total of an item with barcode.
  *
  * @author lumiha
  * @since 08/05/15.
@@ -13,7 +13,7 @@ public class PointOfSale {
     private static String barcodePattern = "\\d{5,12}";
     private final ItemRepository itemRepository;
     private final OutputDevice outputDevice;
-    private Double price;
+    private Double total;
 
     public PointOfSale(final ItemRepository itemRepository, final OutputDevice outputDevice) {
         if (itemRepository == null) throw new IllegalArgumentException("Missing item repository");
@@ -52,8 +52,8 @@ public class PointOfSale {
             final Optional<Double> priceInformation = itemRepository.lookupPrice(normalizedBarcode);
 
             if (priceInformation.isPresent()) {
-                price = priceInformation.get();
-                outputDevice.displayPrice(price);
+                total = priceInformation.get();
+                outputDevice.displayPrice(total);
             } else {
                 outputDevice.displayNotFound(barcode);
             }
@@ -68,8 +68,8 @@ public class PointOfSale {
     }
 
     public void onTotal() {
-        if (Double.valueOf(8.50).equals(price)) {
-            outputDevice.displayTotal(price);
+        if (Double.valueOf(8.50).equals(total)) {
+            outputDevice.displayTotal(total);
         } else {
             outputDevice.displayNoSaleInProgress();
         }
