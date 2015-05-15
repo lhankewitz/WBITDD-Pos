@@ -46,7 +46,7 @@ public class SellingMultipleItemsTest {
     public void onTotal_forThreeFoundItems_resultsInTotal() {
         final String[] barcodes = generateBarcodes();
 
-        register(barcodes);
+        register(barcodes, 8.50, 12.75, 3.30);
 
         scan(barcodes);
 
@@ -63,10 +63,10 @@ public class SellingMultipleItemsTest {
             };
     }
 
-    private void register(final String[] barcodes) {
-        mockItemRepository.when(barcodes[0], 8.50);
-        mockItemRepository.when(barcodes[1], 12.75);
-        mockItemRepository.when(barcodes[2], 3.30);
+    private void register(final String[] barcodes, final double price_0, final double price_1, final double price_2) {
+        mockItemRepository.when(barcodes[0], price_0);
+        mockItemRepository.when(barcodes[1], price_1);
+        mockItemRepository.when(barcodes[2], price_2);
     }
 
     private void scan(final String[] barcodes) {
@@ -79,7 +79,7 @@ public class SellingMultipleItemsTest {
     public void onTotal_forFoundAndNotFoundItems_resultsInTotal() {
         final String[] barcodes =  generateBarcodes();
 
-        register(barcodes);
+        register(barcodes, 8.50, 12.50, 3.00);
 
         scan(barcodes);
 
@@ -87,6 +87,6 @@ public class SellingMultipleItemsTest {
 
         pos.onTotal();
 
-        assertThat(display.getOutputToWrite(), is("Total $24.55"));
+        assertThat(display.getOutputToWrite(), is("Total $24.00"));
     }
 }
