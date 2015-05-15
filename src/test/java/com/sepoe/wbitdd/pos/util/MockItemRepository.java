@@ -1,4 +1,6 @@
-package com.sepoe.wbitdd.pos;
+package com.sepoe.wbitdd.pos.util;
+
+import com.sepoe.wbitdd.pos.ItemRepository;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -35,7 +37,7 @@ public class MockItemRepository implements ItemRepository {
         doThrowException = true;
     }
 
-    void register(final String[] barcodes, final double price_0, final double price_1, final double price_2) {
+    public void register(final String[] barcodes, final double price_0, final double price_1, final double price_2) {
         when(barcodes[0], price_0);
         when(barcodes[1], price_1);
         when(barcodes[2], price_2);

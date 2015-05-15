@@ -1,4 +1,4 @@
-package com.sepoe.wbitdd.pos;
+package com.sepoe.wbitdd.pos.util;
 
 import java.util.Random;
 
@@ -6,7 +6,7 @@ public class BarcodeGenerator {
     public BarcodeGenerator() {
     }
 
-    String generateBarcode() {
+    public String generateBarcode() {
         char[] digitArray = new char[12];
 
         for (int i = 0; i < 12; i++) {
@@ -17,7 +17,7 @@ public class BarcodeGenerator {
         return new String(digitArray);
     }
 
-    String[] generateBarcodes() {
+    public String[] generateBarcodes() {
         return new String[]{
                     generateBarcode()
                     , generateBarcode()

@@ -1,5 +1,7 @@
 package com.sepoe.wbitdd.pos;
 
+import com.sepoe.wbitdd.pos.util.MockItemRepository;
+import com.sepoe.wbitdd.pos.util.MockOutputDevice;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.containsString;

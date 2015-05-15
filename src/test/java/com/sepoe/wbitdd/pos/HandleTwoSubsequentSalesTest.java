@@ -1,5 +1,8 @@
 package com.sepoe.wbitdd.pos;
 
+import com.sepoe.wbitdd.pos.util.BarcodeGenerator;
+import com.sepoe.wbitdd.pos.util.MockItemRepository;
+import com.sepoe.wbitdd.pos.util.MockOutputDevice;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -10,16 +13,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author lumiha
  * @since 15/05/15.
  */
-public class HandleTwoSubsequentSales {
+public class HandleTwoSubsequentSalesTest {
 
     private final BarcodeGenerator barcodeGenerator = new BarcodeGenerator();
     private MockOutputDevice display = new MockOutputDevice();
     private MockItemRepository mockItemRepository = new MockItemRepository();
     private PointOfSale pos = new PointOfSale(mockItemRepository, display);
 
-    // ToTest: subsequent sales
     @Test
-    //@Ignore("extract test data generator first")
     public void onTotal_forTwoSubsequentSales_calculatesTwoTotals() {
 
         final String[] barcodes = barcodeGenerator.generateBarcodes();

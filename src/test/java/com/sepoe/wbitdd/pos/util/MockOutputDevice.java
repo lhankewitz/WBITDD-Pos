@@ -1,4 +1,6 @@
-package com.sepoe.wbitdd.pos;
+package com.sepoe.wbitdd.pos.util;
+
+import com.sepoe.wbitdd.pos.DefaultOutputDevice;
 
 /**
  * Class to test the use of the output device
