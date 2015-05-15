@@ -10,10 +10,13 @@ import java.util.Optional;
  */
 public class PointOfSale {
 
-    private static String barcodePattern = "\\d{5,12}";
+    private static final String barcodePattern = "\\d{5,12}";
+    private static final double ZERO_TOTAL = 0.00;
+
     private final ItemRepository itemRepository;
     private final OutputDevice outputDevice;
-    private Double total = 0.0;
+
+    private double total = ZERO_TOTAL;
 
     public PointOfSale(final ItemRepository itemRepository, final OutputDevice outputDevice) {
         if (itemRepository == null) throw new IllegalArgumentException("Missing item repository");
@@ -82,10 +85,10 @@ public class PointOfSale {
     }
 
     private boolean isZeroTotal() {
-        return Double.valueOf(0.00).equals(total);
+        return ZERO_TOTAL == total;
     }
 
     private void resetTotal() {
-        total = 0.0;
+        total = ZERO_TOTAL;
     }
 }
