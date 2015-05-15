@@ -76,7 +76,7 @@ public class SellingMultipleItemsTest {
     }
 
     @Test
-    public void onTotal_forOneItemFoundOneNotFound_resultsInTotal() {
+    public void onTotal_forFoundAndNotFoundItems_resultsInTotal() {
         final String[] barcodes =  generateBarcodes();
 
         register(barcodes);
