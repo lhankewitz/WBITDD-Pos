@@ -77,5 +77,11 @@ public class PointOfSale {
         } else {
             outputDevice.displayTotal(total);
         }
+
+        resetTotal();
+    }
+
+    private void resetTotal() {
+        total = 0.0;
     }
 }
