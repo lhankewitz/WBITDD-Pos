@@ -39,5 +39,10 @@ public abstract class DefaultOutputDevice implements OutputDevice {
         write("No sale in progress. Try scanning a product");
     }
 
+    @Override
+    public void displayTotal(final Double sum) {
+        write(String.format("Total $%.2f", sum));
+    }
+
     protected abstract void write(String message);
 }

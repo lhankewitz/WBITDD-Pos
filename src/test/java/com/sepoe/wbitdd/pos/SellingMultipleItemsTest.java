@@ -21,4 +21,13 @@ public class SellingMultipleItemsTest {
         pos.onTotal();
         assertThat(display.getOutputToWrite(), is("No sale in progress. Try scanning a product"));
     }
+
+    @Test
+    public void onTotal_withOneItemFound_resultsInPriceOfItem() {
+        final String barcode = "123456";
+        mockItemRepository.when(barcode, 8.50);
+        pos.onBarcode(barcode);
+        pos.onTotal();
+        assertThat(display.getOutputToWrite(), is("Total $8.50"));
+    }
 }

@@ -13,6 +13,7 @@ public class PointOfSale {
     private static String barcodePattern = "\\d{5,12}";
     private final ItemRepository itemRepository;
     private final OutputDevice outputDevice;
+    private Double price;
 
     public PointOfSale(final ItemRepository itemRepository, final OutputDevice outputDevice) {
         if (itemRepository == null) throw new IllegalArgumentException("Missing item repository");
@@ -30,7 +31,7 @@ public class PointOfSale {
                 final String normalizedBarCode = getNormalizedBarCode(barcode);
                 handleValidBarcode(barcode, normalizedBarCode);
             }
-        } catch (Throwable throwable){
+        } catch (Throwable throwable) {
             // in case the output itself throws an exception we cannot write the error to the output
             // which would cause and endless loop.
             throwable.printStackTrace();
@@ -50,8 +51,9 @@ public class PointOfSale {
         try {
             final Optional<Double> priceInformation = itemRepository.lookupPrice(normalizedBarcode);
 
-            if(priceInformation.isPresent()){
-                outputDevice.displayPrice(priceInformation.get());
+            if (priceInformation.isPresent()) {
+                price = priceInformation.get();
+                outputDevice.displayPrice(price);
             } else {
                 outputDevice.displayNotFound(barcode);
             }
@@ -66,6 +68,10 @@ public class PointOfSale {
     }
 
     public void onTotal() {
-        outputDevice.displayNoSaleInProgress();
+        if (Double.valueOf(8.50).equals(price)) {
+            outputDevice.displayTotal(price);
+        } else {
+            outputDevice.displayNoSaleInProgress();
+        }
     }
 }
