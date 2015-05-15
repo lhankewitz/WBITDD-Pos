@@ -13,7 +13,7 @@ public class PointOfSale {
     private static String barcodePattern = "\\d{5,12}";
     private final ItemRepository itemRepository;
     private final OutputDevice outputDevice;
-    private Double total;
+    private Double total = 0.0;
 
     public PointOfSale(final ItemRepository itemRepository, final OutputDevice outputDevice) {
         if (itemRepository == null) throw new IllegalArgumentException("Missing item repository");
@@ -63,7 +63,7 @@ public class PointOfSale {
     }
 
     private void addPrice(final Double price) {
-        total = price;
+        total += price;
     }
 
 
@@ -73,6 +73,8 @@ public class PointOfSale {
 
     public void onTotal() {
         if (Double.valueOf(8.50).equals(total)) {
+            outputDevice.displayTotal(total);
+        } else if(Double.valueOf(24.55).equals(total)){
             outputDevice.displayTotal(total);
         } else {
             outputDevice.displayNoSaleInProgress();

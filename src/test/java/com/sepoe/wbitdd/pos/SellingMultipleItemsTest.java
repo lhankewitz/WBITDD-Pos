@@ -1,6 +1,5 @@
 package com.sepoe.wbitdd.pos;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -37,7 +36,6 @@ public class SellingMultipleItemsTest {
     }
 
     @Test
-    @Ignore("requires refactoring first in POS")
     public void onTotal_forThreeFoundItems_resultsInTotal() {
         final String[] barcodes = generateBarcodes();
 
