@@ -34,4 +34,10 @@ public class MockItemRepository implements ItemRepository {
     public void throwExceptionInLookup() {
         doThrowException = true;
     }
+
+    void register(final String[] barcodes, final double price_0, final double price_1, final double price_2) {
+        when(barcodes[0], price_0);
+        when(barcodes[1], price_1);
+        when(barcodes[2], price_2);
+    }
 }

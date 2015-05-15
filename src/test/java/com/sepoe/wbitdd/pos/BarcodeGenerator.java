@@ -16,4 +16,12 @@ public class BarcodeGenerator {
 
         return new String(digitArray);
     }
+
+    String[] generateBarcodes() {
+        return new String[]{
+                    generateBarCode()
+                    , generateBarCode()
+                    , generateBarCode()
+            };
+    }
 }
