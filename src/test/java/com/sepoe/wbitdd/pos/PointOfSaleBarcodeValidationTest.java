@@ -60,6 +60,12 @@ public class PointOfSaleBarcodeValidationTest {
         mockItemRepository.when(barcode, 13.13);
         pointOfSale.onBarcode(barcode + "\n");
         assertThat(mockOutputDevice.getOutputToWrite(), is("$13.13"));
+    }
+
+    @Test
+    public void onBarcode_forTabulatorEndingBarCode_passesGeneratesCorrectToOutput() {
+        final String barcode = "123456789012";
+        mockItemRepository.when(barcode, 13.13);
 
         pointOfSale.onBarcode(barcode + "\t");
         assertThat(mockOutputDevice.getOutputToWrite(), is("$13.13"));
