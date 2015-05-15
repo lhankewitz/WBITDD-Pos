@@ -35,8 +35,8 @@ public abstract class DefaultOutputDevice implements OutputDevice {
     }
 
     @Override
-    public void displayNoSaleInProgress(final String s) {
-        write(s);
+    public void displayNoSaleInProgress() {
+        write("No sale in progress. Try scanning a product");
     }
 
     protected abstract void write(String message);
