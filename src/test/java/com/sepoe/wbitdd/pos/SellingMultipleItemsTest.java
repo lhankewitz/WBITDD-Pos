@@ -74,4 +74,19 @@ public class SellingMultipleItemsTest {
             pos.onBarcode(barcode);
         }
     }
+
+    @Test
+    public void onTotal_forOneItemFoundOneNotFound_resultsInTotal() {
+        final String[] barcodes =  generateBarcodes();
+
+        register(barcodes);
+
+        scan(barcodes);
+
+        pos.onBarcode(barcodeGenerator.generateBarCode());
+
+        pos.onTotal();
+
+        assertThat(display.getOutputToWrite(), is("Total $24.55"));
+    }
 }
